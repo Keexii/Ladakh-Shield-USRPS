@@ -146,8 +146,8 @@ git commit -m "Initial LADAKH-SHIELD website"
 # 4. Set main branch
 git branch -M main
 
-# 5. Link to your GitHub repository (replace with your actual repository URL)
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+# 5. Link to your GitHub repository
+git remote add origin https://github.com/Keexii/Ladakh-Shield.git
 
 # 6. Push code to GitHub
 git push -u origin main
@@ -163,7 +163,7 @@ git push -u origin main
    - **Folder**: Select `/ (root)`
 5. Click **Save**.
 6. Wait 1 to 2 minutes. GitHub will provide you with your live URL:
-   `https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/`
+   `https://keexii.github.io/Ladakh-Shield/`
 
 ---
 
