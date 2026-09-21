@@ -6,6 +6,10 @@ interface ThemeContextType {
   themeDefinition: ThemeDefinition;
   setTheme: (themeId: ThemeId) => void;
   toggleTheme: () => void;
+  setDayMode: () => void;
+  setNightMode: () => void;
+  isNight: boolean;
+  isDay: boolean;
   isDark: boolean;
   availableThemes: ThemeDefinition[];
 }
@@ -15,23 +19,36 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState<ThemeId>(() => {
     const saved = localStorage.getItem('ladakh_shield_theme');
-    if (saved === 'light' || saved === 'arctic-light') {
-      return 'light';
+    if (saved === 'day' || saved === 'light' || saved === 'arctic-light') {
+      return 'day';
     }
-    return 'dark';
+    return 'night';
   });
 
-  const normalizedThemeId = (currentTheme === 'light' || currentTheme === 'arctic-light') ? 'light' : 'dark';
+  const normalizedThemeId: 'night' | 'day' = 
+    (currentTheme === 'day' || currentTheme === 'light' || currentTheme === 'arctic-light') 
+      ? 'day' 
+      : 'night';
+
   const themeDefinition = AVAILABLE_THEMES.find(t => t.id === normalizedThemeId) || AVAILABLE_THEMES[0];
-  const isDark = normalizedThemeId === 'dark';
+  const isNight = normalizedThemeId === 'night';
+  const isDay = !isNight;
+  const isDark = isNight;
 
   const toggleTheme = () => {
-    setCurrentTheme(prev => (prev === 'light' || prev === 'arctic-light' ? 'dark' : 'light'));
+    setCurrentTheme(prev => 
+      (prev === 'day' || prev === 'light' || prev === 'arctic-light') ? 'night' : 'day'
+    );
   };
+
+  const setDayMode = () => setCurrentTheme('day');
+  const setNightMode = () => setCurrentTheme('night');
 
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove(
+      'theme-night',
+      'theme-day',
       'theme-dark', 
       'theme-light', 
       'theme-defence-dark', 
@@ -39,18 +56,31 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       'theme-tactical-green', 
       'theme-midnight-blue', 
       'theme-high-contrast',
+      'night',
+      'day',
       'dark',
       'light'
     );
-    root.classList.add('theme-' + normalizedThemeId);
-    root.classList.add(normalizedThemeId);
-    root.setAttribute('data-theme', normalizedThemeId);
+
+    if (isNight) {
+      root.classList.add('theme-night', 'theme-dark', 'night', 'dark');
+      root.setAttribute('data-theme', 'night');
+      root.setAttribute('data-theme-mode', 'night');
+    } else {
+      root.classList.add('theme-day', 'theme-light', 'day', 'light');
+      root.setAttribute('data-theme', 'day');
+      root.setAttribute('data-theme-mode', 'day');
+    }
 
     if (document.body) {
-      document.body.classList.remove('theme-dark', 'theme-light', 'dark', 'light');
-      document.body.classList.add('theme-' + normalizedThemeId);
-      document.body.classList.add(normalizedThemeId);
-      document.body.setAttribute('data-theme', normalizedThemeId);
+      document.body.classList.remove('theme-night', 'theme-day', 'theme-dark', 'theme-light', 'night', 'day', 'dark', 'light');
+      if (isNight) {
+        document.body.classList.add('theme-night', 'theme-dark', 'night', 'dark');
+        document.body.setAttribute('data-theme', 'night');
+      } else {
+        document.body.classList.add('theme-day', 'theme-light', 'day', 'light');
+        document.body.setAttribute('data-theme', 'day');
+      }
     }
 
     try {
@@ -58,7 +88,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch (e) {
       console.warn('Failed to save theme in localStorage', e);
     }
-  }, [currentTheme, normalizedThemeId]);
+  }, [currentTheme, normalizedThemeId, isNight]);
 
   return (
     <ThemeContext.Provider
@@ -67,6 +97,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         themeDefinition,
         setTheme: setCurrentTheme,
         toggleTheme,
+        setDayMode,
+        setNightMode,
+        isNight,
+        isDay,
         isDark,
         availableThemes: AVAILABLE_THEMES
       }}

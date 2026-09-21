@@ -31,7 +31,7 @@ export const Header: React.FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) =
     stopScenarioTest
   } = useTelemetry();
 
-  const { themeDefinition, setTheme, toggleTheme, isDark } = useTheme();
+  const { themeDefinition, setTheme, toggleTheme, isNight, isDay } = useTheme();
   const [themeModalOpen, setThemeModalOpen] = useState(false);
   const [timeStr, setTimeStr] = useState('');
   const [dateStr, setDateStr] = useState('');
@@ -203,7 +203,7 @@ export const Header: React.FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) =
               {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
 
-            {/* Dual Theme Switcher (Dark / Light) */}
+            {/* Day and Night Theme Switcher */}
             <div 
               className="flex items-center p-0.5 rounded-lg border text-xs font-mono shadow-sm"
               style={{ 
@@ -212,39 +212,39 @@ export const Header: React.FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) =
               }}
             >
               <button
-                onClick={() => setTheme('dark')}
-                className={`flex items-center space-x-1.5 px-2.5 py-1 rounded transition-all ${
-                  isDark
+                onClick={() => setTheme('night')}
+                className={`flex items-center space-x-1 px-2 py-1 rounded transition-all ${
+                  isNight
                     ? 'font-bold shadow-sm'
                     : 'opacity-60 hover:opacity-100'
                 }`}
                 style={{
-                  backgroundColor: isDark ? 'var(--accent-primary)' : 'transparent',
-                  color: isDark ? '#07111F' : 'var(--text-primary)',
+                  backgroundColor: isNight ? 'var(--accent-primary)' : 'transparent',
+                  color: isNight ? '#07111F' : 'var(--text-primary)',
                 }}
-                title="Active: Dark Theme (High-Altitude Military-Tech)"
-                aria-label="Set Dark Theme"
+                title="Active: Night Theme (Tactical Night Ops & Low-Light)"
+                aria-label="Set Night Theme"
               >
-                <Moon className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline text-[11px]">DARK</span>
+                <Moon className="w-3.5 h-3.5 text-[#00D9FF]" />
+                <span className="text-[11px] font-bold">NIGHT</span>
               </button>
 
               <button
-                onClick={() => setTheme('light')}
-                className={`flex items-center space-x-1.5 px-2.5 py-1 rounded transition-all ${
-                  !isDark
+                onClick={() => setTheme('day')}
+                className={`flex items-center space-x-1 px-2 py-1 rounded transition-all ${
+                  isDay
                     ? 'font-bold shadow-sm'
                     : 'opacity-60 hover:opacity-100'
                 }`}
                 style={{
-                  backgroundColor: !isDark ? 'var(--accent-primary)' : 'transparent',
-                  color: !isDark ? '#FFFFFF' : 'var(--text-primary)',
+                  backgroundColor: isDay ? 'var(--accent-primary)' : 'transparent',
+                  color: isDay ? '#FFFFFF' : 'var(--text-primary)',
                 }}
-                title="Active: Light Theme (Arctic Snow & High Visibility)"
-                aria-label="Set Light Theme"
+                title="Active: Day Theme (High-Altitude Arctic Daylight)"
+                aria-label="Set Day Theme"
               >
-                <Sun className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline text-[11px]">LIGHT</span>
+                <Sun className="w-3.5 h-3.5 text-[#FFB020]" />
+                <span className="text-[11px] font-bold">DAY</span>
               </button>
             </div>
 

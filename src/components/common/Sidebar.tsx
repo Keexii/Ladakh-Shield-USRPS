@@ -40,7 +40,7 @@ export const Sidebar: React.FC<Props> = ({
   setMobileMenuOpen
 }) => {
   const { alerts, protection } = useTelemetry();
-  const { setTheme, isDark } = useTheme();
+  const { setTheme, isNight, isDay } = useTheme();
 
   const unackAlertsCount = alerts.filter(a => !a.acknowledged).length;
 
@@ -92,46 +92,58 @@ export const Sidebar: React.FC<Props> = ({
       >
         {/* Navigation Items */}
         <div className="p-3 space-y-1 overflow-y-auto">
-          {/* Quick Dual Theme Toggle Widget */}
+          {/* Quick Day / Night Theme Toggle Widget */}
           <div className="mb-3 p-2.5 rounded-lg border shadow-sm" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-subtle)' }}>
             <div className="flex items-center justify-between text-[10px] font-mono mb-1.5 uppercase" style={{ color: 'var(--text-muted)' }}>
-              <span>Theme Mode</span>
-              <span className="font-bold" style={{ color: 'var(--accent-primary)' }}>{isDark ? 'DARK THEME' : 'LIGHT THEME'}</span>
+              <span>Day / Night Mode</span>
+              <span className="font-bold flex items-center space-x-1" style={{ color: 'var(--accent-primary)' }}>
+                {isNight ? (
+                  <>
+                    <Moon className="w-3 h-3 inline mr-0.5" />
+                    <span>NIGHT MODE</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="w-3 h-3 inline mr-0.5" />
+                    <span>DAY MODE</span>
+                  </>
+                )}
+              </span>
             </div>
             <div className="grid grid-cols-2 gap-1 p-0.5 rounded border" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-subtle)' }}>
               <button
-                onClick={() => setTheme('dark')}
+                onClick={() => setTheme('night')}
                 className={`flex items-center justify-center space-x-1.5 py-1.5 rounded text-xs font-mono transition-all ${
-                  isDark
+                  isNight
                     ? 'font-bold shadow-sm'
                     : 'opacity-60 hover:opacity-100'
                 }`}
                 style={{
-                  backgroundColor: isDark ? 'var(--accent-primary)' : 'transparent',
-                  color: isDark ? '#07111F' : 'var(--text-primary)'
+                  backgroundColor: isNight ? 'var(--accent-primary)' : 'transparent',
+                  color: isNight ? '#07111F' : 'var(--text-primary)'
                 }}
-                title="Switch to Dark Theme"
-                aria-label="Switch to Dark Theme"
+                title="Switch to Night Theme (Tactical Deep Navy)"
+                aria-label="Switch to Night Theme"
               >
                 <Moon className="w-3.5 h-3.5" />
-                <span className="text-[10px] font-bold">DARK</span>
+                <span className="text-[10px] font-bold">NIGHT</span>
               </button>
               <button
-                onClick={() => setTheme('light')}
+                onClick={() => setTheme('day')}
                 className={`flex items-center justify-center space-x-1.5 py-1.5 rounded text-xs font-mono transition-all ${
-                  !isDark
+                  isDay
                     ? 'font-bold shadow-sm'
                     : 'opacity-60 hover:opacity-100'
                 }`}
                 style={{
-                  backgroundColor: !isDark ? 'var(--accent-primary)' : 'transparent',
-                  color: !isDark ? '#FFFFFF' : 'var(--text-primary)'
+                  backgroundColor: isDay ? 'var(--accent-primary)' : 'transparent',
+                  color: isDay ? '#FFFFFF' : 'var(--text-primary)'
                 }}
-                title="Switch to Light Theme"
-                aria-label="Switch to Light Theme"
+                title="Switch to Day Theme (Arctic Snow Daylight)"
+                aria-label="Switch to Day Theme"
               >
                 <Sun className="w-3.5 h-3.5" />
-                <span className="text-[10px] font-bold">LIGHT</span>
+                <span className="text-[10px] font-bold">DAY</span>
               </button>
             </div>
           </div>

@@ -10,18 +10,26 @@
      Warning: #FFB020 | Critical: #FF4D4D
   */
   :root, 
+  :root[data-theme='night'],
   :root[data-theme='dark'],
+  html[data-theme='night'],
   html[data-theme='dark'],
+  html.night,
   html.dark,
+  html.theme-night,
   html.theme-dark,
+  body.night,
   body.dark,
+  body.theme-night,
   body.theme-dark,
+  .theme-night,
   .theme-dark, 
   .theme-defence-dark, 
   .theme-military-tech, 
   .theme-tactical-green, 
   .theme-midnight-blue, 
   .theme-high-contrast,
+  .night,
   .dark {
     --bg-primary: #07111F;
     --bg-secondary: #0D1B2A;
@@ -45,20 +53,28 @@
     color-scheme: dark;
   }
 
-  /* LIGHT THEME (High-Altitude Arctic Snow)
+  /* DAY THEME (High-Altitude Arctic Snow & Daylight Operations)
      Background: #F1F5F9 | Secondary bg: #E2E8F0 | Cards: #FFFFFF
      Primary accent: #0284C7 (Sky Cyan) | Secondary accent: #059669 (Signal Green)
      Main text: #0F172A | Muted text: #64748B | Borders: #CBD5E1
      Warning: #D97706 | Critical: #DC2626
   */
+  :root[data-theme='day'],
   :root[data-theme='light'],
+  html[data-theme='day'],
   html[data-theme='light'],
+  html.day,
   html.light,
+  html.theme-day,
   html.theme-light,
+  body.day,
   body.light,
+  body.theme-day,
   body.theme-light,
+  .theme-day,
   .theme-light, 
   .theme-arctic-light,
+  .day,
   .light {
     --bg-primary: #F1F5F9;
     --bg-secondary: #E2E8F0;
@@ -90,27 +106,39 @@
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  /* High contrast adaptivity for light theme */
+  /* High contrast adaptivity for Day theme */
+  html.day .text-\[\#00FF9C\],
   html.light .text-\[\#00FF9C\],
+  html.theme-day .text-\[\#00FF9C\],
   html.theme-light .text-\[\#00FF9C\],
+  .day .text-\[\#00FF9C\],
   .light .text-\[\#00FF9C\] {
     color: #059669 !important;
   }
 
+  html.day .text-\[\#00D9FF\],
   html.light .text-\[\#00D9FF\],
+  html.theme-day .text-\[\#00D9FF\],
   html.theme-light .text-\[\#00D9FF\],
+  .day .text-\[\#00D9FF\],
   .light .text-\[\#00D9FF\] {
     color: #0284C7 !important;
   }
 
+  html.day .border-\[\#00FF9C\],
   html.light .border-\[\#00FF9C\],
+  html.theme-day .border-\[\#00FF9C\],
   html.theme-light .border-\[\#00FF9C\],
+  .day .border-\[\#00FF9C\],
   .light .border-\[\#00FF9C\] {
     border-color: #059669 !important;
   }
 
+  html.day .border-\[\#00D9FF\],
   html.light .border-\[\#00D9FF\],
+  html.theme-day .border-\[\#00D9FF\],
   html.theme-light .border-\[\#00D9FF\],
+  .day .border-\[\#00D9FF\],
   .light .border-\[\#00D9FF\] {
     border-color: #0284C7 !important;
   }

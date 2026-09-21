@@ -131,21 +131,23 @@ export const SettingsView: React.FC = () => {
           <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
             <div>
               <h3 className="font-mono font-bold text-sm tracking-wider uppercase" style={{ color: 'var(--text-primary)' }}>
-                Cockpit Theme Customization
+                Day &amp; Night Theme Customization
               </h3>
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Instant dynamic re-theming without page reload. Changes persist across browser sessions.
+                Switch between high-altitude Tactical Night Ops and Arctic Daylight operations without page reload.
               </p>
             </div>
             <span className="text-xs font-mono font-bold text-[#00FF9C]">
-              2 THEMES AVAILABLE (DARK & LIGHT)
+              2 MODES AVAILABLE (DAY &amp; NIGHT)
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {availableThemes.map((theme) => {
-              const isSelected = currentTheme === theme.id || (theme.id === 'dark' && currentTheme === 'defence-dark') || (theme.id === 'light' && currentTheme === 'arctic-light');
-              const isLight = theme.id === 'light' || theme.id === 'arctic-light';
+              const isSelected = currentTheme === theme.id || 
+                (theme.id === 'night' && (currentTheme === 'dark' || currentTheme === 'defence-dark')) || 
+                (theme.id === 'day' && (currentTheme === 'light' || currentTheme === 'arctic-light'));
+              const isLight = theme.id === 'day' || theme.id === 'light' || theme.id === 'arctic-light';
               return (
                 <div
                   key={theme.id}

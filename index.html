@@ -10,12 +10,14 @@
       (function() {
         try {
           var t = localStorage.getItem('ladakh_shield_theme');
-          if (t === 'light' || t === 'arctic-light') {
-            document.documentElement.className = 'theme-light light';
-            document.documentElement.setAttribute('data-theme', 'light');
+          if (t === 'day' || t === 'light' || t === 'arctic-light') {
+            document.documentElement.className = 'theme-day theme-light day light';
+            document.documentElement.setAttribute('data-theme', 'day');
+            document.documentElement.setAttribute('data-theme-mode', 'day');
           } else {
-            document.documentElement.className = 'theme-dark dark';
-            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.className = 'theme-night theme-dark night dark';
+            document.documentElement.setAttribute('data-theme', 'night');
+            document.documentElement.setAttribute('data-theme-mode', 'night');
           }
         } catch (e) {}
       })();

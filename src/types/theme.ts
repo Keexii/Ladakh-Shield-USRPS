@@ -1,11 +1,11 @@
-export type ThemeId = 'dark' | 'light' | 'defence-dark' | 'arctic-light';
+export type ThemeId = 'night' | 'day' | 'dark' | 'light' | 'defence-dark' | 'arctic-light';
 
 export interface ThemeDefinition {
   id: ThemeId;
   name: string;
   subtitle: string;
   tagline: string;
-  category: 'dark' | 'light';
+  category: 'night' | 'day' | 'dark' | 'light';
   previewColors: {
     bg: string;
     card: string;
@@ -16,11 +16,11 @@ export interface ThemeDefinition {
 
 export const AVAILABLE_THEMES: ThemeDefinition[] = [
   {
-    id: 'dark',
-    name: 'DARK THEME',
-    subtitle: 'High-Altitude Military-Tech',
-    tagline: 'LADAKH-SHIELD Military-Tech (Deep Navy #07111F + Ice Cyan #00D9FF + Safety Green #00FF9C)',
-    category: 'dark',
+    id: 'night',
+    name: 'NIGHT THEME',
+    subtitle: 'Tactical Night Operations',
+    tagline: 'Deep Navy (#07111F) + Ice Cyan (#00D9FF) + Safety Green (#00FF9C) for low-light night-ops and tactical clarity',
+    category: 'night',
     previewColors: {
       bg: '#07111F',
       card: '#12263A',
@@ -29,11 +29,11 @@ export const AVAILABLE_THEMES: ThemeDefinition[] = [
     }
   },
   {
-    id: 'light',
-    name: 'LIGHT THEME',
-    subtitle: 'Arctic Snow & High Visibility',
-    tagline: 'High-Altitude Arctic Snow (Pure White #FFFFFF + Sky Cyan #0284C7 + Signal Green #059669)',
-    category: 'light',
+    id: 'day',
+    name: 'DAY THEME',
+    subtitle: 'Arctic Snow & High Daylight Visibility',
+    tagline: 'Crisp Arctic Snow (#F1F5F9) + Pure White (#FFFFFF) + Sky Cyan (#0284C7) for high-glare daytime operations',
+    category: 'day',
     previewColors: {
       bg: '#F1F5F9',
       card: '#FFFFFF',

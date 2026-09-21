@@ -31,10 +31,10 @@ export const ThemeSelectorModal: React.FC<Props> = ({ isOpen, onClose }) => {
             </div>
             <div>
               <h2 className="text-lg font-bold tracking-wider font-mono uppercase" style={{ color: 'var(--text-primary)' }}>
-                Cockpit Theme Selection
+                Day &amp; Night Theme Selection
               </h2>
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Switch between high-contrast Dark and high-visibility Light themes
+                Switch between Tactical Night Ops and Arctic Daylight modes
               </p>
             </div>
           </div>
@@ -51,43 +51,45 @@ export const ThemeSelectorModal: React.FC<Props> = ({ isOpen, onClose }) => {
         {/* Quick segmented toggle bar */}
         <div className="flex rounded-xl p-1 mb-5 border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-subtle)' }}>
           <button
-            onClick={() => setTheme('dark')}
+            onClick={() => setTheme('night')}
             className={`flex-1 py-2.5 px-4 rounded-lg font-mono text-xs font-bold flex items-center justify-center space-x-2 transition-all ${
-              currentTheme === 'dark'
+              (currentTheme === 'night' || currentTheme === 'dark')
                 ? 'shadow-md scale-[1.01]'
                 : 'opacity-70 hover:opacity-100'
             }`}
             style={{
-              backgroundColor: currentTheme === 'dark' ? 'var(--accent-primary)' : 'transparent',
-              color: currentTheme === 'dark' ? '#07111F' : 'var(--text-primary)',
+              backgroundColor: (currentTheme === 'night' || currentTheme === 'dark') ? 'var(--accent-primary)' : 'transparent',
+              color: (currentTheme === 'night' || currentTheme === 'dark') ? '#07111F' : 'var(--text-primary)',
             }}
           >
             <Moon className="w-4 h-4" />
-            <span>DARK THEME</span>
+            <span>NIGHT THEME</span>
           </button>
 
           <button
-            onClick={() => setTheme('light')}
+            onClick={() => setTheme('day')}
             className={`flex-1 py-2.5 px-4 rounded-lg font-mono text-xs font-bold flex items-center justify-center space-x-2 transition-all ${
-              currentTheme === 'light'
+              (currentTheme === 'day' || currentTheme === 'light')
                 ? 'shadow-md scale-[1.01]'
                 : 'opacity-70 hover:opacity-100'
             }`}
             style={{
-              backgroundColor: currentTheme === 'light' ? 'var(--accent-primary)' : 'transparent',
-              color: currentTheme === 'light' ? '#07111F' : 'var(--text-primary)',
+              backgroundColor: (currentTheme === 'day' || currentTheme === 'light') ? 'var(--accent-primary)' : 'transparent',
+              color: (currentTheme === 'day' || currentTheme === 'light') ? '#07111F' : 'var(--text-primary)',
             }}
           >
             <Sun className="w-4 h-4" />
-            <span>LIGHT THEME</span>
+            <span>DAY THEME</span>
           </button>
         </div>
 
         {/* 2 Theme Detailed Preview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {availableThemes.map((theme) => {
-            const isSelected = currentTheme === theme.id;
-            const isDarkCard = theme.id === 'dark';
+            const isSelected = currentTheme === theme.id || 
+              (theme.id === 'night' && currentTheme === 'dark') || 
+              (theme.id === 'day' && currentTheme === 'light');
+            const isDarkCard = theme.id === 'night' || theme.id === 'dark';
 
             return (
               <button
