@@ -1,0 +1,37 @@
+﻿-- LADAKH-SHIELD: High-Altitude Electronic System Monitoring & Protection
+-- Database Architecture: MySQL / MariaDB Schema (v2.3)
+CREATE DATABASE IF NOT EXISTS ladakh_shield;
+USE ladakh_shield;
+
+CREATE TABLE IF NOT EXISTS sensor_data (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    device_id VARCHAR(32) NOT NULL DEFAULT 'LSH-24-05-0017',
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    temperature DECIMAL(5,2) NOT NULL,
+    pressure DECIMAL(6,2) NOT NULL,
+    humidity DECIMAL(5,2) NOT NULL,
+    bus_voltage DECIMAL(5,2) NOT NULL,
+    current_draw DECIMAL(5,3) NOT NULL,
+    calculated_power DECIMAL(6,2) GENERATED ALWAYS AS (bus_voltage * current_draw) STORED,
+    data_source ENUM('LIVE', 'SIMULATED', 'OFFLINE') NOT NULL DEFAULT 'SIMULATED'
+);
+
+CREATE TABLE IF NOT EXISTS equipment_status (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    equipment_code ENUM('DRONE', 'RADAR', 'RADIO', 'COMPUTER', 'BATTERY') NOT NULL,
+    status ENUM('NORMAL', 'WARNING', 'CRITICAL', 'OFFLINE') NOT NULL DEFAULT 'NORMAL',
+    health_percentage TINYINT UNSIGNED NOT NULL DEFAULT 100,
+    operating_voltage DECIMAL(5,2) NOT NULL,
+    operating_current DECIMAL(5,3) NOT NULL,
+    internal_temperature DECIMAL(5,2) NOT NULL,
+    last_contact TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS alerts (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    severity ENUM('CRITICAL', 'WARNING', 'INFO') NOT NULL,
+    equipment_code VARCHAR(32) NOT NULL DEFAULT 'SYSTEM',
+    message VARCHAR(255) NOT NULL,
+    status ENUM('ACTIVE', 'ACKNOWLEDGED', 'RESOLVED') NOT NULL DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

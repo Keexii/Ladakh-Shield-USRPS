@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* DARK THEME (LADAKH-SHIELD High-Altitude Military-Tech - Default)
+     Background: #07111F | Secondary bg: #0D1B2A | Cards: #12263A
+     Primary accent: #00D9FF (Ice Cyan) | Secondary accent: #00FF9C (Safety Green)
+     Main text: #F5F7FA | Muted text: #8FA3B8 | Borders: #1E4055
+     Warning: #FFB020 | Critical: #FF4D4D
+  */
+  :root, 
+  :root[data-theme='dark'],
+  html[data-theme='dark'],
+  html.dark,
+  html.theme-dark,
+  body.dark,
+  body.theme-dark,
+  .theme-dark, 
+  .theme-defence-dark, 
+  .theme-military-tech, 
+  .theme-tactical-green, 
+  .theme-midnight-blue, 
+  .theme-high-contrast,
+  .dark {
+    --bg-primary: #07111F;
+    --bg-secondary: #0D1B2A;
+    --bg-card: #12263A;
+    --bg-card-hover: #173049;
+    --border-subtle: #1E4055;
+    --border-accent: #00D9FF;
+    --text-primary: #F5F7FA;
+    --text-secondary: #8FA3B8;
+    --text-muted: #8FA3B8;
+    --accent-primary: #00D9FF;
+    --accent-glow: rgba(0, 217, 255, 0.25);
+    --accent-secondary: #00FF9C;
+    --header-bg: rgba(7, 17, 31, 0.95);
+    --sidebar-bg: rgba(7, 17, 31, 0.98);
+    --status-normal: #00FF9C;
+    --status-warning: #FFB020;
+    --status-critical: #FF4D4D;
+    --status-sensor: #00D9FF;
+    --grid-line: rgba(0, 217, 255, 0.05);
+    color-scheme: dark;
+  }
+
+  /* LIGHT THEME (High-Altitude Arctic Snow)
+     Background: #F1F5F9 | Secondary bg: #E2E8F0 | Cards: #FFFFFF
+     Primary accent: #0284C7 (Sky Cyan) | Secondary accent: #059669 (Signal Green)
+     Main text: #0F172A | Muted text: #64748B | Borders: #CBD5E1
+     Warning: #D97706 | Critical: #DC2626
+  */
+  :root[data-theme='light'],
+  html[data-theme='light'],
+  html.light,
+  html.theme-light,
+  body.light,
+  body.theme-light,
+  .theme-light, 
+  .theme-arctic-light,
+  .light {
+    --bg-primary: #F1F5F9;
+    --bg-secondary: #E2E8F0;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F8FAFC;
+    --border-subtle: #CBD5E1;
+    --border-accent: #0284C7;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --accent-primary: #0284C7;
+    --accent-glow: rgba(2, 132, 199, 0.2);
+    --accent-secondary: #059669;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --sidebar-bg: rgba(248, 250, 252, 0.98);
+    --status-normal: #059669;
+    --status-warning: #D97706;
+    --status-critical: #DC2626;
+    --status-sensor: #0284C7;
+    --grid-line: rgba(2, 132, 199, 0.08);
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* High contrast adaptivity for light theme */
+  html.light .text-\[\#00FF9C\],
+  html.theme-light .text-\[\#00FF9C\],
+  .light .text-\[\#00FF9C\] {
+    color: #059669 !important;
+  }
+
+  html.light .text-\[\#00D9FF\],
+  html.theme-light .text-\[\#00D9FF\],
+  .light .text-\[\#00D9FF\] {
+    color: #0284C7 !important;
+  }
+
+  html.light .border-\[\#00FF9C\],
+  html.theme-light .border-\[\#00FF9C\],
+  .light .border-\[\#00FF9C\] {
+    border-color: #059669 !important;
+  }
+
+  html.light .border-\[\#00D9FF\],
+  html.theme-light .border-\[\#00D9FF\],
+  .light .border-\[\#00D9FF\] {
+    border-color: #0284C7 !important;
+  }
+}
+
+/* Cockpit HUD styles with Ladakh Military-Tech Palette */
+.cockpit-card {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cockpit-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.cockpit-card-interactive {
+  cursor: pointer;
+}
+
+.cockpit-card-interactive:hover {
+  transform: translateY(-2px);
+}
+
+.hud-border {
+  border: 1px solid var(--border-subtle);
+}
+
+.hud-border-active {
+  border: 1px solid var(--accent-primary);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.tech-grid-bg {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}

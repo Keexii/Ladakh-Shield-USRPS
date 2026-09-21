@@ -1,0 +1,321 @@
+{
+  "system": "LADAKH-SHIELD",
+  "systemName": "High-Altitude Electronic System Monitoring & Protection",
+  "deviceId": "LSH-24-05-0017",
+  "firmware": "v2.3.7-PROD",
+  "altitudeMsl": 4850,
+  "location": {
+    "region": "Ladakh Plateau, Changthang Sector",
+    "latitude": 34.2268,
+    "longitude": 77.5619,
+    "mslAltitudeMeters": 4850,
+    "atmosphericZone": "High-Altitude Extreme Cold Arid"
+  },
+  "exportedAt": "2026-09-21T12:23:09.283Z",
+  "systemStatus": "OPERATIONAL",
+  "operationalMode": "AUTONOMOUS_CONTINUOUS",
+  "hardwareSpecs": {
+    "processor": "Espressif ESP32-WROOM-32D Dual-Core Xtensa LX6 @ 240MHz",
+    "rfTransceiver": "Semtech SX1278 LoRa 433MHz Spread Spectrum",
+    "storage": "MicroSD 32GB Class 10 FAT32 High-Endurance Ring Buffer",
+    "sensors": [
+      {
+        "name": "Bosch BME280",
+        "bus": "I2C 0x76",
+        "params": [
+          "Temperature",
+          "Barometric Pressure",
+          "Relative Humidity"
+        ]
+      },
+      {
+        "name": "Texas Instruments INA219",
+        "bus": "I2C 0x40",
+        "params": [
+          "Bus Voltage",
+          "Shunt Current",
+          "Power Dissipation"
+        ]
+      }
+    ],
+    "actuators": [
+      {
+        "name": "PTC Silicone Heating Element",
+        "gpio": "GPIO 25",
+        "rating": "12V 25W",
+        "role": "Cold freeze barrier"
+      },
+      {
+        "name": "Maglev Brushless Fan",
+        "gpio": "GPIO 26 (PWM)",
+        "rating": "12V 0.35A",
+        "role": "High-altitude thermal dissipation"
+      },
+      {
+        "name": "Solid-State N-Channel MOSFET",
+        "gpio": "GPIO 27",
+        "rating": "30V 15A Low RDS(on)",
+        "role": "Overcurrent cutoff trip"
+      },
+      {
+        "name": "Piezo Buzzer & Indicator LED",
+        "gpio": "GPIO 14 & 12",
+        "role": "Audible alarm & optical telemetry annunciator"
+      }
+    ]
+  },
+  "metrics": {
+    "bme280": {
+      "temperature": -24.8,
+      "temperatureUnit": "°C",
+      "pressure": 57.8,
+      "pressureUnit": "kPa",
+      "humidity": 18.2,
+      "humidityUnit": "%",
+      "calculatedAltitude": 4852.4,
+      "dewPoint": -36.1,
+      "freezeRiskLevel": "HIGH_MONITORED"
+    },
+    "ina219": {
+      "voltage": 12.38,
+      "voltageUnit": "V",
+      "current": 2.64,
+      "currentUnit": "A",
+      "power": 32.68,
+      "powerUnit": "W",
+      "shuntVoltageMv": 26.4
+    },
+    "battery": {
+      "voltage": 12.38,
+      "soc": 82.5,
+      "capacityMah": 20000,
+      "healthPct": 94.2,
+      "temperature": 14.5,
+      "cycleCount": 68,
+      "estimatedRemainingRuntimeMin": 405
+    },
+    "lora": {
+      "status": "CONNECTED",
+      "frequencyMhz": 433,
+      "spreadingFactor": 9,
+      "bandwidthKhz": 125,
+      "codingRate": "4/5",
+      "txPowerDbm": 20,
+      "rssi": -88,
+      "snr": 7.5,
+      "packetsSent": 14820,
+      "packetsReceived": 14798,
+      "packetLossPct": 0.15
+    },
+    "sdCard": {
+      "status": "ONLINE",
+      "capacityGb": 32,
+      "usedGb": 4.82,
+      "freeGb": 27.18,
+      "utilizationPct": 15.1,
+      "writeSpeedMBs": 18.6,
+      "currentLogFile": "LOG_20260921.DAT",
+      "totalRecords": 148200
+    }
+  },
+  "protectionState": {
+    "heater": {
+      "id": "HEATER_PTC",
+      "name": "PTC Silicone Heating Pad",
+      "status": "ENGAGED",
+      "mode": "AUTO",
+      "reason": "Ambient temperature -24.8°C < -15.0°C threshold. Internal enclosure sustained at +12.4°C.",
+      "dutyCyclePct": 65,
+      "outputMetric": "65% PWM (16.25W)"
+    },
+    "fan": {
+      "id": "FAN_PWM",
+      "name": "Brushless Maglev Cooling Fan",
+      "status": "STANDBY",
+      "mode": "AUTO",
+      "reason": "Core enclosure thermal margins within nominal limits (< 45.0°C).",
+      "dutyCyclePct": 0,
+      "outputMetric": "0 RPM (Passive convection)"
+    },
+    "mosfet": {
+      "id": "MOSFET_BREAKER",
+      "name": "Solid-State MOSFET Breaker",
+      "status": "ENGAGED",
+      "mode": "AUTO",
+      "reason": "Bus current (2.64A) below overcurrent threshold (3.50A). Circuit closed.",
+      "dutyCyclePct": 100,
+      "outputMetric": "CLOSED (Conducting)"
+    },
+    "emergencyMode": {
+      "id": "EMERGENCY_ISOLATOR",
+      "name": "System Emergency Isolation",
+      "status": "DISENGAGED",
+      "mode": "MANUAL",
+      "reason": "Safety interlock armed; normal operation permitted",
+      "dutyCyclePct": 0,
+      "outputMetric": "ARMED_STANDBY"
+    },
+    "safetyInterlockArmed": true,
+    "hysteresisActive": true
+  },
+  "equipmentSummary": [
+    {
+      "id": "EQ-01",
+      "name": "UAV Recon Quadcopter",
+      "category": "Drone",
+      "status": "NORMAL",
+      "temp": -12.4,
+      "voltage": 22.2,
+      "current": 4.1,
+      "health": 96,
+      "criticalFactor": "ESC Thermal Stability & Rotor Freezing",
+      "protectionAction": "Battery Pre-Heat & Prop De-Icing Cycle Ready"
+    },
+    {
+      "id": "EQ-02",
+      "name": "Surveillance Radar Unit",
+      "category": "Radar",
+      "status": "NORMAL",
+      "temp": 18.2,
+      "voltage": 24,
+      "current": 5.8,
+      "health": 92,
+      "criticalFactor": "Convective derating at 58 kPa",
+      "protectionAction": "Active Radome Heating & Pressure Telemetry Track"
+    },
+    {
+      "id": "EQ-03",
+      "name": "Tactical LoRa/VHF Radio",
+      "category": "Radio",
+      "status": "NORMAL",
+      "temp": 8.5,
+      "voltage": 12,
+      "current": 1.4,
+      "health": 98,
+      "criticalFactor": "RF PA Thermal Dissipation & Frequency Drift",
+      "protectionAction": "TCXO Frequency Locked, Link RSSI: -88 dBm"
+    },
+    {
+      "id": "EQ-04",
+      "name": "Tactical Edge Compute Unit",
+      "category": "Computer",
+      "status": "NORMAL",
+      "temp": 24.1,
+      "voltage": 19.5,
+      "current": 3.2,
+      "health": 94,
+      "criticalFactor": "Cold Boot Freezing & Derating under low air density",
+      "protectionAction": "Pre-charge Thermal Interlock Satisfied"
+    },
+    {
+      "id": "EQ-05",
+      "name": "Cold-Barrier LiFePO4 Power Bank",
+      "category": "Battery",
+      "status": "NORMAL",
+      "temp": 14.5,
+      "voltage": 12.38,
+      "current": 2.64,
+      "health": 94,
+      "criticalFactor": "Lithium Plating Risk Below 0°C Charging",
+      "protectionAction": "Charge Interlock Locked to PTC Temperature > 5°C"
+    }
+  ],
+  "thresholds": {
+    "lowTemperature": -15,
+    "highTemperature": 45,
+    "lowVoltage": 11.2,
+    "overcurrent": 3.5,
+    "lowPressure": 55
+  },
+  "activeAlerts": [
+    {
+      "id": "ALT-101",
+      "timestamp": "2026-09-21T12:20:09.287Z",
+      "timeFormatted": "17:35:10",
+      "severity": "WARNING",
+      "equipment": "SYSTEM",
+      "title": "Sub-Zero Freeze Barrier Active",
+      "message": "Ambient temp at -24.8°C. Autonomous PTC heating duty cycle set to 65%.",
+      "acknowledged": false,
+      "resolved": false
+    },
+    {
+      "id": "ALT-102",
+      "timestamp": "2026-09-21T12:13:09.287Z",
+      "timeFormatted": "17:28:12",
+      "severity": "INFO",
+      "equipment": "COMMUNICATION",
+      "title": "LoRa RF Link Nominal",
+      "message": "Continuous telemetry handshake confirmed with remote ground outpost.",
+      "acknowledged": true,
+      "resolved": true
+    }
+  ],
+  "historicalLogs": [
+    {
+      "id": "LOG-8801",
+      "timestamp": "2026-09-21T12:21:09.287Z",
+      "timeFormatted": "17:36:10",
+      "equipment": "DRONE",
+      "temperature": -12.4,
+      "pressure": 57.8,
+      "voltage": 22.2,
+      "current": 4.1,
+      "power": 91.02,
+      "status": "NORMAL",
+      "eventDescription": "Pre-flight telemetry link telemetry sync nominal."
+    },
+    {
+      "id": "LOG-8802",
+      "timestamp": "2026-09-21T12:21:39.287Z",
+      "timeFormatted": "17:36:40",
+      "equipment": "RADAR",
+      "temperature": 18.2,
+      "pressure": 57.8,
+      "voltage": 24,
+      "current": 5.8,
+      "power": 139.2,
+      "status": "NORMAL",
+      "eventDescription": "Radome heating pulse completed; azimuth scan synced."
+    },
+    {
+      "id": "LOG-8803",
+      "timestamp": "2026-09-21T12:22:09.287Z",
+      "timeFormatted": "17:37:10",
+      "equipment": "RADIO",
+      "temperature": 8.5,
+      "pressure": 57.8,
+      "voltage": 12,
+      "current": 1.4,
+      "power": 16.8,
+      "status": "NORMAL",
+      "eventDescription": "LoRa 433MHz packet beacon acknowledged (RSSI: -88 dBm)."
+    },
+    {
+      "id": "LOG-8804",
+      "timestamp": "2026-09-21T12:22:39.287Z",
+      "timeFormatted": "17:37:40",
+      "equipment": "COMPUTER",
+      "temperature": 24.1,
+      "pressure": 57.8,
+      "voltage": 19.5,
+      "current": 3.2,
+      "power": 62.4,
+      "status": "NORMAL",
+      "eventDescription": "Edge inference cycle completed at 60 FPS."
+    },
+    {
+      "id": "LOG-8805",
+      "timestamp": "2026-09-21T12:23:09.287Z",
+      "timeFormatted": "17:38:10",
+      "equipment": "BATTERY",
+      "temperature": 14.5,
+      "pressure": 57.8,
+      "voltage": 12.38,
+      "current": 2.64,
+      "power": 32.68,
+      "status": "NORMAL",
+      "eventDescription": "Cell balance variance < 8mV across all 4 series cells."
+    }
+  ]
+}

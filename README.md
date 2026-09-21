@@ -1,196 +1,171 @@
-# LADAKH-SHIELD 🏔️⚡
-### Universal Smart Protection & Monitoring System for High-Altitude Equipment
+﻿# LADAKH-SHIELD 🏔️⚡
+### High-Altitude Electronic System Monitoring & Protection Cockpit
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Status: Prototype](https://img.shields.io/badge/Status-Prototype%20v1.0-cyan.svg)](#)
-[![Simulation: Ready](https://img.shields.io/badge/Simulation-Bench%20Ready-emerald.svg)](#)
-[![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-brightgreen.svg)](#how-to-deploy-on-github-pages)
+[![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.0.1-646CFF.svg)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6.3-3178C6.svg)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.16-38B2AC.svg)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **Tagline:** Universal Smart Protection & Monitoring System for High-Altitude Equipment  
-> **Core Pipeline:** Sense → Analyze → Protect → Alert → Record
-
----
-
-## ⚠️ Prototype & Ethics Disclaimer
-**LADAKH-SHIELD** is an undergraduate student innovation and research prototype.
-* **No Real-World Deployment Claims**: This system is **not** currently deployed in Ladakh, DRDO facilities, military installations, or active defense zones.
-* **Simulated Demo Data**: The live dashboard on the public website runs an interactive **Simulated Demo Stream** with realistic high-altitude parameters, designed for bench testing, algorithmic validation, and presentation demonstrations.
-* **Clear Distinction**: All documentation strictly differentiates between laboratory bench prototypes, simulated testbed data, proposed production capabilities, and chamber testing.
+> **Universal Smart Protection & Monitoring Cockpit for Extreme High-Altitude Systems**  
+> **Core Pipeline:** Sense (BME280 + INA219) → Analyze (Deterministic Rule Engine) → Protect (Closed-Loop Actuators) → Alert (Piezo + LoRa) → Record (MicroSD Blackbox)
 
 ---
 
-## 📖 Project Overview
-High-altitude mountainous environments (such as the Ladakh plateau at 3,000m to 5,500m MSL) present extreme physical stresses to critical electrical and electronic systems:
-- Sub-zero freezing temperatures down to **-40°C**
-- Depressed atmospheric pressure (**50 to 70 kPa**), which reduces convective cooling efficiency
-- Severe Li-ion battery capacity loss and cold-charging hazards
-- Diurnal thermal cycling inducing solder joint and PCB stress
-- RF communication attenuation and antenna icing
-- Drone motor strain and lift reduction in thin air
+## 🚀 Quick Start (Run Locally)
 
-**LADAKH-SHIELD** is a unified, modular protection and monitoring platform that continuously evaluates environmental and electrical parameters, making autonomous decisions via an on-board ESP32 controller to actuate heating pads, cooling fans, and multi-tier alerts to extend equipment operational life.
+### Prerequisites
+- **Node.js** v18.0.0 or higher
+- **npm** v9.0.0 or higher
 
----
+### Installation & Launch
 
-## 🚀 Key Features
+1. **Extract the ZIP file** to your preferred folder:
+   ```bash
+   cd ladakh-shield
+   ```
 
-1. **Sense (High-Frequency Multi-Sensor Acquisition)**:
-   - Bosch BME280: Ambient temperature, barometric pressure, relative humidity.
-   - TI INA219 / INA226: High-side bus voltage, current draw, power dissipation.
-2. **Analyze (Edge Logic & Hysteresis Engine)**:
-   - ESP32 Dual-Core Xtensa MCU running FreeRTOS.
-   - Dynamic safety envelopes with hysteresis to eliminate rapid switching oscillations.
-3. **Protect (Closed-Loop Actuation)**:
-   - Logic-level N-channel MOSFET switching stages.
-   - PTC Silicone Heating Pad for sub-zero anti-freeze warming.
-   - High-RPM brushless cooling fan for forced convective heat removal in thin air.
-4. **Alert (Defense-in-Depth Redundancy)**:
-   - 0.96" OLED display for local metrics.
-   - High-visibility status LEDs (Green/Red) and 85dB active piezo buzzer.
-   - Long-range Semtech SX1278 LoRa telemetry beacon (433/868 MHz).
-5. **Record (Blackbox Persistence)**:
-   - High-speed SPI MicroSD card module saving timestamped CSV records and fault snapshots.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
----
+3. **Start the local development server**:
+   ```bash
+   npm run dev
+   ```
+   Open your browser at `http://localhost:5173/` to view the cockpit application.
 
-## 🎛️ Equipment Support Matrix
-LADAKH-SHIELD is designed with a universal sensing core that interfaces with:
-* 🚁 **UAV / Drones**: Flight battery thermal conditioning, ESC current surge protection, thin-air lift stress logging.
-* 📡 **Radar Enclosures**: Convective cooling assistance, radome frost prevention, power stability.
-* 📻 **Communication Stations**: Remote repeater health, RF amplifier thermal stability, solar-battery conditioning.
-* 💻 **Field Computers / Servers**: Tactical edge AI units, condensation mitigation during startup cycles.
-* 🔋 **Battery Storage & Power Banks**: Pre-charge thermal barrier management, over-current cutoff.
+4. **Production Build & Preview (Optional)**:
+   ```bash
+   # Build optimized production bundle
+   npm run build
+
+   # Preview the production build locally
+   npm run preview
+   ```
 
 ---
 
-## 🛠️ Hardware Bill of Materials (BOM)
+## 🎨 Dual Theme System (Dark & Light)
 
-| Component | Function / Role | Interface | Operating Specs |
-| :--- | :--- | :--- | :--- |
-| **ESP32 NodeMCU** | Central Controller & Decision Logic | GPIO / I2C / SPI | Dual-Core 240MHz, 520KB SRAM |
-| **BME280** | Temperature, Pressure, Humidity | I2C (0x76) | -40°C to +85°C, 300 to 1100 hPa |
-| **INA219 / INA226** | Voltage, Current & Power Sensing | I2C (0x40) | 0–26V bus, up to 3.2A (extendable via shunt) |
-| **MOSFET Module** | Power Actuator Switching | PWM / Digital Out | 30V / 10A Logic-Level N-Channel |
-| **PTC Heating Pad** | Cold-Condition Thermal Barrier | 12V DC Rail | 12V 15W–30W Flexible Silicone |
-| **Cooling Fan** | Forced Air Convection | 5V / 12V DC Rail | 40mm brushless maglev fan |
-| **0.96" OLED** | Real-Time Local Telemetry HUD | I2C (0x3C) | 128×64 SSD1306, low power |
-| **LoRa SX1278** | Long-Range RF Telemetry Link | SPI Bus | 433 / 868 / 915 MHz, Chirp Spread Spectrum |
-| **MicroSD Module** | Offline Event & Blackbox Logging | SPI Bus | FAT32 format, CSV telemetry storage |
-| **LED + Buzzer** | Local Audiovisual Alarms | GPIO Pins | Dual-color LED + 85dB Piezo sounder |
-| **Power Conditioning** | System Power Distribution | Input Rail | 12V Input, Buck Regulators (5V & 3.3V rails) |
+LADAKH-SHIELD features a fully responsive, high-contrast dual theme system:
+
+- **Dark Theme (High-Altitude Military-Tech - Default)**:
+  - Background: `#07111F` (Deep Navy)
+  - Secondary: `#0D1B2A` | Cards: `#12263A`
+  - Accents: `#00D9FF` (Ice Cyan) + `#00FF9C` (Safety Green)
+  - Text: `#F5F7FA` | Muted: `#8FA3B8` | Borders: `#1E4055`
+  - Warning: `#FFB020` | Critical: `#FF4D4D`
+
+- **Light Theme (Arctic Snow & Daylight Operations)**:
+  - Background: `#F1F5F9` (Arctic Snow)
+  - Secondary: `#E2E8F0` | Cards: `#FFFFFF` (Pure White)
+  - Accents: `#0284C7` (Sky Cyan) + `#059669` (Signal Green)
+  - Text: `#0F172A` | Muted: `#64748B` | Borders: `#CBD5E1`
+  - Warning: `#D97706` | Critical: `#DC2626`
+
+**Toggle Options**:
+1. **1-Click Sun ☀️ / Moon 🌙 Toggle** in the top header bar.
+2. **Palette Button Modal** with segmented switch and side-by-side preview cards.
+3. **Settings > Appearance** tab with detailed palette swatches.
 
 ---
 
-## 📐 Mechanical Enclosure Concept
-- **Target Dimensions**: `120 mm (L) × 80 mm (W) × 50 mm (H)`
-- **Rating**: Weather-resistant IP65 concept
-- **Materials**: UV-stabilized ABS / Polycarbonate with silicone perimeter gasket
-- **Features**: PG-7 cable glands, isolated internal sensor chamber, exhaust fan grill with dust/snow baffles.
+## 🎛️ Navigation & Views
+
+1. **Dashboard (`DashboardView.tsx`)**:
+   - Live BME280 telemetry (Temperature, Barometric Pressure, Relative Humidity) with sparklines.
+   - INA219 power telemetry (Bus Voltage, Load Current, Dissipated Power `V × A = 32.24W`, Battery SOC & Autonomy).
+   - Equipment Health Matrix for 5 defense platforms (**Drone, Radar, Radio, Computer, Battery**).
+   - Autonomous Rule Engine evaluating real-time risk scores and recommended actions.
+
+2. **Sensors (`SensorsView.tsx`)**:
+   - 6 high-frequency dynamic charts (Temperature, Pressure, Humidity, Voltage, Current, Power).
+   - Time filters (`1H`, `6H`, `24H`, `7D`).
+   - Recharts charts dynamically styled using theme CSS variables.
+
+3. **Equipment (`EquipmentView.tsx`)**:
+   - Centralized status monitoring for:
+     - 🚁 **UAV Recon Quadcopter**: Motor load, airfoil icing risk, ESC temperature.
+     - 📡 **Surveillance Radar**: Radome heater status, RF output power, convective derating.
+     - 📻 **Tactical Radio / Repeater**: LoRa link, RSSI (-88 dBm), SNR (+7.5 dB).
+     - 💻 **Tactical Edge Compute Unit**: CPU clock, thermal throttling percent, cold boot heater state.
+     - 🔋 **Cold-Barrier Battery Power Bank**: State of charge (SOC), cell balance spread.
+
+4. **Communication (`CommunicationView.tsx`)**:
+   - Semtech SX1278 LoRa 433MHz telemetry link monitoring.
+   - Real-time packet inspector with hex payload and CRC verification.
+   - Interactive system communication topology visualization.
+
+5. **Adaptive Protection (`ProtectionView.tsx`)**:
+   - Closed-loop actuators with `AUTO` / `MANUAL` switching:
+     - 🔥 **PTC Silicone Heater Pad**: Anti-freeze warming with hysteresis.
+     - ❄️ **Brushless Maglev Cooling Fan**: Convective cooling assist in thin air (58 kPa).
+     - ⚡ **Solid-State MOSFET Breaker**: Overcurrent cutoff trip (3.5A limit) with manual reset.
+     - 🚨 **Emergency System Isolation**: Armed safety interlock.
+   - **System Test / Scenario Evaluation Bench**:
+     - Pre-configured evaluation tests: Extreme Cold, High Temperature, Low Pressure, Low Battery, Overcurrent, Communication Failure.
+
+6. **Data Logs (`DataLogsView.tsx`)**:
+   - Tabular real-time event logs with search, pagination, and multi-filter criteria.
+   - MicroSD 32GB Blackbox storage capacity monitor and write speed indicator.
+   - Direct CSV and JSON telemetry export buttons.
+
+7. **Alerts Center (`AlertsView.tsx`)**:
+   - Prioritized notification stream (CRITICAL, WARNING, INFO) with acknowledge & clear actions.
+   - Synthesized Web Audio API piezo buzzer sound with mute/unmute control.
+
+8. **Settings (`SettingsView.tsx`)**:
+   - Appearance theme customization.
+   - Autonomous rule engine threshold calibration (EEPROM persistence simulation).
+   - ESP32 REST API endpoint and MySQL backend configuration.
 
 ---
 
-## 💻 Software & Website Architecture
-This repository contains the complete public web portal and interactive demonstration testbed:
-- **Zero Backend Dependencies**: Built with modern semantic HTML5, custom CSS3 design system, and vanilla ES6 JavaScript.
-- **Interactive Telemetry HUD**: Live strip chart canvas, serial console stream, scenario presets (*Normal, Extreme Cold, High Temp, Low Battery, Over Current, Comm Failure*), and manual override controls with synthesized Web Audio piezo sound.
-- **Interactive CAD Inspector**: Multi-view vector inspector displaying Isometric, Exploded, Internal Component Layout, and Orthographic 2D projections.
+## 📁 Project Structure
 
-### Directory Structure
 ```
 ladakh-shield/
-├── index.html                 # Main website with all 13 core sections
-├── README.md                  # Project documentation & deployment guide
-├── LICENSE                    # MIT open-source license
-├── src/                       # Production ESP32 embedded firmware
-│   ├── main.cpp               # Core Sense → Analyze → Protect → Alert → Record loop
-│   ├── config.h               # Hardware pin assignments & safety thresholds
-│   ├── telemetry.h            # Data structures & packet serializers
-│   └── README.md              # Firmware compilation & flashing guide
-├── css/
-│   ├── style.css              # Defence-tech theme, typography, responsive layout
-│   └── dashboard.css          # Telemetry HUD, gauge bars, terminal styling
-├── js/
-│   ├── main.js                # Navigation, scrollspy, CAD switcher, clipboard
-│   └── dashboard.js           # Simulation engine, scenario triggers, audio beeps
-└── assets/                    # Project assets and media
+├── package.json                   # Project dependencies and npm scripts
+├── package-lock.json              # Exact dependency lockfile
+├── index.html                     # Application HTML entry point
+├── vite.config.ts                 # Vite bundler configuration
+├── tsconfig.json                  # TypeScript compiler configuration
+├── tailwind.config.js             # Tailwind CSS design system configuration
+├── postcss.config.js              # PostCSS plugins configuration
+├── LADAKH_SHIELD_DIAGNOSTIC.json  # Comprehensive diagnostic telemetry dataset
+├── README.md                      # Project documentation and setup guide
+├── public/                        # Static assets served at root
+│   ├── vite.svg                   # Ladakh Shield high-altitude crest icon
+│   └── assets/
+│       ├── shield-logo.svg        # Scalable vector logo
+│       └── LADAKH_SHIELD_DIAGNOSTIC.json
+├── src/
+│   ├── main.tsx                   # React root entry point
+│   ├── App.tsx                    # Main layout, router & navigation tabs
+│   ├── components/
+│   │   ├── common/                # Header, Navigation, Modals, Footer
+│   │   └── views/                 # 8 primary application views
+│   ├── context/
+│   │   ├── TelemetryContext.tsx   # Real-time state, sensors, logs, tests
+│   │   └── ThemeContext.tsx       # Dark & Light theme state & toggles
+│   ├── services/
+│   │   ├── simulationEngine.ts    # High-altitude telemetry simulation
+│   │   ├── scenarioTester.ts      # Scenario evaluation bench engine
+│   │   ├── ruleEngine.ts          # Deterministic risk evaluation rules
+│   │   ├── audioService.ts        # Web Audio piezo buzzer synthesizer
+│   │   └── apiService.ts          # ESP32 REST API service layer
+│   ├── styles/
+│   │   └── index.css              # Theme CSS variables & HUD styles
+│   └── types/
+│       ├── telemetry.ts           # Sensor, equipment, log type definitions
+│       ├── protection.ts          # Actuators and scenario types
+│       └── theme.ts               # Theme definitions and color tokens
+└── firmware/                      # ESP32 C++ firmware prototype reference
 ```
-
----
-
-## 🏃 How to Run Locally
-
-### Method 1: Direct File Open
-Simply double-click `index.html` in your file explorer or open it in any modern browser (Chrome, Firefox, Edge, Safari). No web server is strictly required!
-
-### Method 2: Python HTTP Server (Recommended)
-Open a terminal in the `ladakh-shield` folder:
-```bash
-# Python 3
-python -m http.server 8000
-```
-Then visit: `http://localhost:8000`
-
----
-
-## 🚀 How to Deploy on GitHub Pages
-
-This project is 100% static and requires zero build steps, making it ideal for free hosting on GitHub Pages:
-
-### Step 1: Initialize Git and Push to GitHub
-Open PowerShell or your terminal inside the project directory:
-
-```bash
-# 1. Initialize local repository
-git init
-
-# 2. Add all files to staging
-git add .
-
-# 3. Create initial commit
-git commit -m "Initial LADAKH-SHIELD website"
-
-# 4. Set main branch
-git branch -M main
-
-# 5. Link to your GitHub repository
-git remote add origin https://github.com/Keexii/Ladakh-Shield.git
-
-# 6. Push code to GitHub
-git push -u origin main
-```
-
-### Step 2: Enable GitHub Pages
-1. Open your repository on GitHub in your browser.
-2. Click on **Settings** (gear icon at the top).
-3. In the left sidebar under *Code and automation*, click **Pages**.
-4. Under **Build and deployment**:
-   - **Source**: Select `Deploy from a branch`
-   - **Branch**: Select `main`
-   - **Folder**: Select `/ (root)`
-5. Click **Save**.
-6. Wait 1 to 2 minutes. GitHub will provide you with your live URL:
-   `https://keexii.github.io/Ladakh-Shield/`
-
----
-
-## ⚠️ Project Limitations
-1. **Atmospheric Modeling**: The simulation simulates standard atmospheric lapse rate and pressure curves; physical non-linear turbulence is not modeled.
-2. **Current Limits**: Prototype MOSFET switching lines are rated for bench demonstrations (< 10A). Industrial deployments would require automotive-grade solid-state relays.
-3. **Chamber vs. Real-World**: Laboratory freeze chamber testing validates thermal pre-heating, but does not replicate sub-zero high-velocity blizzard winds.
-
----
-
-## 👥 Team Information
-- **Team Name**: LADAKH-SHIELD Innovation Group
-- **Hardware Lead**: [Team Member Name] — Embedded Systems & PCB Design
-- **Software Lead**: [Team Member Name] — ESP32 Firmware & Web Telemetry
-- **Mechanical Lead**: [Team Member Name] — CAD Modeling & IP65 Chassis
-- **Department**: Department of Electronics & Computer Engineering
-- **Institution**: [Your College / University Name]
-- **Faculty Mentor**: [Mentor Name], Assistant Professor / Professor
 
 ---
 
 ## 📄 License
-This project is open-source and released under the [MIT License](LICENSE).
-Feel free to fork, adapt, and build upon this platform for academic, research, and non-commercial innovation.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
