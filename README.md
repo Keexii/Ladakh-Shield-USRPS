@@ -100,6 +100,12 @@ This repository contains the complete public web portal and interactive demonstr
 ladakh-shield/
 ├── index.html                 # Main website with all 13 core sections
 ├── README.md                  # Project documentation & deployment guide
+├── LICENSE                    # MIT open-source license
+├── src/                       # Production ESP32 embedded firmware
+│   ├── main.cpp               # Core Sense → Analyze → Protect → Alert → Record loop
+│   ├── config.h               # Hardware pin assignments & safety thresholds
+│   ├── telemetry.h            # Data structures & packet serializers
+│   └── README.md              # Firmware compilation & flashing guide
 ├── css/
 │   ├── style.css              # Defence-tech theme, typography, responsive layout
 │   └── dashboard.css          # Telemetry HUD, gauge bars, terminal styling
